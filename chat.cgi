@@ -26,7 +26,8 @@ srv.mount_proc "/" do |req, res|
       File.open("chat.log", "w") do |f|
         Marshal.dump chat, f
       end
-      File.open("chat.html", "w") {|f| f.puts ERB.new(CHAT_HTML).result(binding)}
+      chat_content = ERB.new(CHAT_HTML).result(binding)
+      File.open("chat.html", "w") {|f| f.puts chat_content}
     ensure
       f.flock(File::LOCK_UN)
     end
